@@ -22,10 +22,10 @@
 <body>
     <legend>Add Items</legend>
     <fieldset >
-        <label>Type the name of the item:</label><br>
+        <label>Type the name of the item:</label></br>
         <input type="text" name="item" id="item">
-        <input type="button" value="Add Item" id="addItem">
-
+        <input type="button" value="Add Item" id="addItem" required></br>
+        <label id="error" style="color:red"></label>
         <ul id="Itemslist">
             
         </ul>
@@ -35,65 +35,75 @@
         // Adding new list item
         document.getElementById("addItem").onclick= function()
          {
+            
             let itemName =  document.getElementById("item").value;
-            let allList = document.getElementById("Itemslist");
+            if(itemName==''){
+                document.getElementById("error").innerHTML = 'Please enter item name';
+            }
+            else
+            {
+                document.getElementById("error").innerHTML = '';
+                itemName.value = '';
+                let allList = document.getElementById("Itemslist");
 
-           let listItem = document.createElement("li");
+                let listItem = document.createElement("li");
 
-           listItem.innerHTML = itemName;
-           listItem.id = itemName;
+                listItem.innerHTML = itemName;
+                listItem.id = itemName;
 
-           // Adding remove button to each list item
-           let removeButton = document.createElement("button");
-           removeButton.innerHTML = "Remove";
-           removeButton.id = itemName;
-           
-           // On click remove item from the list
-           removeButton.onclick = function(){
-            console.log("Item removed!");
-            document.getElementById(removeButton.id).remove();
-           }
-
-
-           // Adding edit button to each item
-           let editButton = document.createElement("button");
-           editButton.innerHTML = "Edit";
-           editButton.id = itemName;
-        
-           editButton.onclick = function()
-           {
-                // onlick save action
-                if(editButton.innerHTML == "Save")
-                {
-                    console.log("Need to save");
-                    editButton.innerHTML = "Edit";
-                    let newInput = document.getElementById("newInput").value;
-                    listItem.innerHTML = newInput;
-                    listItem.id = newInput;
-                    editButton.id = newInput;
-                    removeButton.id = newInput;
-                    listItem.appendChild(editButton);
-                    listItem.appendChild(removeButton);
+                // Adding remove button to each list item
+                let removeButton = document.createElement("button");
+                removeButton.innerHTML = "Remove";
+                removeButton.id = itemName;
+                
+                // On click remove item from the list
+                removeButton.onclick = function(){
+                    console.log("Item removed!");
+                    document.getElementById(removeButton.id).remove();
                 }
 
-                // onclick edit action
-                else
-                {
-                    editButton.innerHTML = "Save";
-                    let newInput = document.createElement("input")
-                    newInput.id = "newInput";
-                    
-                    listItem.innerHTML = '<input type="text" id="newInput">';
-                    listItem.appendChild(editButton);
-                    listItem.appendChild(removeButton);
-                }
-           }
 
-           
-           // Adding each list item to the parent ul list
-           allList.appendChild(listItem);
-           listItem.appendChild(editButton);
-           listItem.appendChild(removeButton);
+                // Adding edit button to each item
+                let editButton = document.createElement("button");
+                editButton.innerHTML = "Edit";
+                editButton.id = itemName;
+                
+                editButton.onclick = function()
+                {
+                        // onlick save action
+                        if(editButton.innerHTML == "Save")
+                        {
+                            console.log("Need to save");
+                            editButton.innerHTML = "Edit";
+                            let newInput = document.getElementById("newInput").value;
+                            listItem.innerHTML = newInput;
+                            listItem.id = newInput;
+                            editButton.id = newInput;
+                            removeButton.id = newInput;
+                            listItem.appendChild(editButton);
+                            listItem.appendChild(removeButton);
+                        }
+
+                        // onclick edit action
+                        else
+                        {
+                            editButton.innerHTML = "Save";
+                            let newInput = document.createElement("input")
+                            newInput.id = "newInput";
+                            
+                            listItem.innerHTML = '<input type="text" id="newInput">';
+                            listItem.appendChild(editButton);
+                            listItem.appendChild(removeButton);
+                        }
+                }
+
+                
+                // Adding each list item to the parent ul list
+                allList.appendChild(listItem);
+                listItem.appendChild(editButton);
+                listItem.appendChild(removeButton);
+            }
+            
 
 
         }
